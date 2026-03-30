@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/Checkout.API/Checkout.API.csproj" />
     <Project Path="src/Shared.Integration/Shared.Integration.csproj" />
   </Folder>
 </Solution>

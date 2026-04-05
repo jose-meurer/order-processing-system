@@ -1,4 +1,4 @@
-﻿namespace Checkout.API.Infrastructure.Data;
+﻿namespace Checkout.API.Infrastructure.Data.Models;
 
 public class OutboxMessage
 {

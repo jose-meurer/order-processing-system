@@ -1,11 +1,15 @@
 ﻿using Checkout.API.Application.Dtos;
+using Checkout.API.Application.Interfaces;
 using Checkout.API.Domain.Entities;
 using Checkout.API.Domain.Interfaces;
 using Shared.Integration.Events;
 
 namespace Checkout.API.Application.Commands;
 
-public class CreateOrderCommandHandler(IOrderRepository orderRepository, IUserContext userContext)
+public class CreateOrderCommandHandler(
+    IOrderRepository orderRepository, 
+    IUserContext userContext,
+    IEventBus eventBus)
 {
     public async Task<Guid> Handle(CreateOrderRequestDto request, CancellationToken cancellationToken)
     {
@@ -29,7 +33,7 @@ public class CreateOrderCommandHandler(IOrderRepository orderRepository, IUserCo
             CreatedAt = order.CreatedAt
         };
         
-        //TODO: Adicionar o orderPlacedEvent no OutboxRepository
+        await eventBus.PublishAsync(orderPlacedEvent, cancellationToken);
         await orderRepository.SaveChangesAsync(cancellationToken);
         return order.Id;
     }

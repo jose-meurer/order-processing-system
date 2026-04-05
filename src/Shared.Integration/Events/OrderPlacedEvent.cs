@@ -7,7 +7,7 @@ public class OrderPlacedEvent
 {
     public Guid OrderId { get; init; }
     public Guid CustomerId { get; init; }
-    public string? CustomerEmail { get; init; }
+    public string CustomerEmail { get; init; } = string.Empty;
     public decimal TotalAmount { get; init; }
     public DateTime CreatedAt { get; init; }
 }

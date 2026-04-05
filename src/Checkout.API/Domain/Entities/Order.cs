@@ -6,7 +6,7 @@ public class Order
 {
     public Guid Id { get; private set; }
     public Guid CustomerId { get; private set; }
-    public string? CustomerEmail { get; private set; }
+    public string CustomerEmail { get; private set; } = string.Empty;
     public decimal TotalAmount { get; private set; }
     public OrderStatus Status { get; private set; }
     public DateTime CreatedAt { get; private set; }

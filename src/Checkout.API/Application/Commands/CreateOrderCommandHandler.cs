@@ -1,6 +1,7 @@
 ﻿using Checkout.API.Application.Dtos;
 using Checkout.API.Application.Interfaces;
 using Checkout.API.Domain.Entities;
+using Checkout.API.Domain.Exceptions;
 using Checkout.API.Domain.Interfaces;
 using Shared.Integration.Events;
 
@@ -14,12 +15,12 @@ public class CreateOrderCommandHandler(
     public async Task<Guid> Handle(CreateOrderRequestDto request, CancellationToken cancellationToken)
     {
         if (request.TotalAmount <= 0)
-            throw new ArgumentException("O valor do pedido deve ser maior que zero.");
+            throw new DomainException("O valor do pedido deve ser maior que zero.", DomainErrors.Order.InvalidAmount);
 
         var customerId = userContext.GetCurrentUserId();
         var customerEmail = userContext.GetCurrentUserEmail();
         
-        //Checar estoque no Redis
+        //TODO:Checar estoque
 
         var order = new Order(customerId, customerEmail, request.TotalAmount);
         await orderRepository.AddAsync(order, cancellationToken);
